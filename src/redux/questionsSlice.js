@@ -10,7 +10,7 @@ const questionsSlice = createSlice({
         selectAnswer: (state, action) => {
             const { answerIndex, tab } = action.payload;
             state.questions[tab].answerSelected = answerIndex;
-            if (tab !== 10){
+            if (tab !== state.questions.length){
                 state.questions[tab + 1].active = true;
             }
             return state;
