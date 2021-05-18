@@ -38,7 +38,7 @@ ul {
     border-width: 2px;
 }
 
-.answer-button, .nav-button {
+/* .answer-button, .nav-button {
     box-shadow: inset 0px 1px 0px 0px #ffffff;
 	background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
 	background-color:#ffffff;
@@ -46,33 +46,31 @@ ul {
 	display:inline-block;
 	cursor:pointer;
 	/* color:#666666; */
-    color: black;
+    /* color: black;
 	font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
 	padding:6px 24px;
-	text-decoration:none;
-}
+	text-decoration:none; */
+/* } */
 
-.answer-button {
+/* .answer-button {
     width: 300px;
     height: 50px;
-}
+} */
 
-.answer-button:hover, .nav-button:hover {
+/* .answer-button:hover, .nav-button:hover {
 	background:linear-gradient(to bottom, cadetblue 5%, rgb(131, 183, 184) 100%);
 	background-color: rgb(64, 116, 117);
-}
-
+} */
+/*
 .answer-button.active {
     box-shadow:inset 0px -3px 7px 0px cadetblue;
 	background:linear-gradient(to bottom, rgb(131, 183, 184) 5%, cadetblue 100%);
 	background-color: cadetblue;
-}
+} */
 
-.question {
-    padding: 40px 0;
-}
+
 
 
 
