@@ -1,7 +1,5 @@
-
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router';
-import { getQuestions, setShowQuizFalse } from '../../redux/questionsSlice';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
 import LoggedinMenu from './LoggedInMenu';
 import NotLoggedInMenu from './NotLoggedInMenu';
 /**
@@ -12,15 +10,11 @@ import NotLoggedInMenu from './NotLoggedInMenu';
 
 
 function Menu(props) {
-    const { startQuiz } = useSelector(state => state.questions);
     const { loggedIn, currentAccount } = useSelector(state => state.accounts);
-    const history = useHistory();
-    const dispatch = useDispatch();  
-
-    if (startQuiz) {
-      console.log(startQuiz);
-      // dispatch(setShowQuizFalse());
-      return (<Redirect push to='/quiz' />);
+    if (!loggedIn) {
+      return (
+        <Redirect to='/login' />
+      );
     }
 
     return (

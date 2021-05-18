@@ -3,12 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const questionsSlice = createSlice({
     name: 'questions',
     initialState: {
-        startQuiz: false,
         category: null,
         questions: {},
         results: {},
         score: null,
-        showResults: false
+        quizComplete: false
     },
     reducers: {
         selectAnswer: ({ questions }, { payload: { answer, tab } }) => {
@@ -31,50 +30,37 @@ const questionsSlice = createSlice({
 
         getQuestionSet: (state, { payload }) => {
             state.questions = payload;
-            state.startQuiz = true;
         },
 
         getResultsSet: (state, { payload }) => {
-            console.log(payload)
             state.results = payload.results;
             state.score = payload.score;
-            state.showResults = true;
+            state.quizComplete = true
         },
 
-        showResultWindow: state => state.showResults = true,
-
-        setShowResultWindowFalse: state => state.showResults = false,
-
-        showQuizWindow: state => {
-            state.startQuiz = true;
-        },
-
-        setShowQuizFalse: state => {
-            state.startQuiz = false;
-        },
-
+        clearQuestions: state => {state.questions = {}}
     }
 });
 
 export const { 
-    selectAnswer, getQuestionSet, setCategory, getResultsSet, showQuizWindow, setShowQuizFalse, showResultWindow, setShowResultWindowFalse
+    selectAnswer, getQuestionSet, setCategory, getResultsSet, clearQuestions
  } = questionsSlice.actions;
 export default questionsSlice.reducer;
 
-export function getQuestions(route) {
+export function getQuestions(route, history) {
     return async dispatch => {
         try {
           const response = await fetch('/api/quiz/' + route)
           const questions = await response.json()
           dispatch(getQuestionSet(questions));
-          dispatch(setShowQuizFalse());
+          history.push('/quiz');
         } catch (error) {
           console.log('Could not load questions');
         }
       }
 }
 
-export function getResults(category, userAnswers) {
+export function getResults(category, userAnswers, history) {
     return async dispatch => {
 
         try {
@@ -84,7 +70,7 @@ export function getResults(category, userAnswers) {
         })
             const quizResults = await response.json()
             dispatch(getResultsSet(quizResults));
-            dispatch(setShowResultWindowFalse());
+            history.push('/results')
         } catch (error) {
             console.log(error);
         }

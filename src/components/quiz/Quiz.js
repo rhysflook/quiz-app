@@ -1,30 +1,21 @@
-import {useState} from 'react';
-import {
-    Redirect, useHistory
-  } from "react-router-dom";
 import Question from './Question';
 import AnswerGrid from './AnswerGrid';
 import NavButton from './NavButton';
 import SubmitButton from './SubmitButton';
-
 import './quiz.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getQuestions, setShowQuizFalse } from '../../redux/questionsSlice';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
 
 function Quiz(props) {
     
-    const { questions, showResults, startQuiz } = useSelector(state => state.questions);
-    // const dispatch = useDispatch();
-    // if (startQuiz) {
-    //     dispatch(setShowQuizFalse());
-    // }
+    const { loggedIn } = useSelector(state => state.accounts);
+    const { questions } = useSelector(state => state.questions);
 
-    if (showResults) {
-        // history.push('/results')
+    if (!loggedIn) {
         return (
-          <Redirect push to='/results'/>
+          <Redirect to='/login' />
         );
-    　}
+      }
 
     function checkIfAnswered(questionNum) {
         return questions[questionNum].answerSelected !== null;

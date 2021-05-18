@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const userData = sessionStorage;
 
-const initialState = {
-    loggedIn: userData.getItem('loggedIn'),
+const sessionUserData = {
+    loggedIn: userData.getItem('loggedIn') ,
     currentAccount: {
         email: userData.getItem('email'),
         password: userData.getItem('password'),
@@ -11,10 +11,15 @@ const initialState = {
         lName: userData.getItem('lName'),
     }
 }
-console.log(initialState);
+
+
 const accountSlice = createSlice({
     name: 'account',
-    initialState,
+    initialState: {
+        loggedIn: sessionUserData.loggedIn,
+        currentAccount: sessionUserData.currentAccount,
+        failedLogin: false
+    },
     reducers: {
         login: (state, { payload }) => {
             state.loggedIn = true;
@@ -24,25 +29,39 @@ const accountSlice = createSlice({
         logout: state => {
             state.loggedIn = false;
             state.currentAccount = {}
+        },
+
+        showLoginError: state => {
+            state.failedLogin = true;
+        },
+
+        hideLoginError: state => {
+            state.failedLogin = false;
         }
     }
 });
-
-export const { login, logout } = accountSlice.actions;
+export const { login, logout, showLoginError, hideLoginError } = accountSlice.actions;
 export default accountSlice.reducer;
 
 export function getAccount(email, password) {
     return async dispatch => {
-        // dispatch(getRecipes())
+        dispatch(hideLoginError());
         try {
           const response = await fetch('/api/check-account', {
               method: 'POST',
               body: JSON.stringify({ email, password })
           })
-          const data = await response.json()
-          dispatch(login(data));
+          const userData = await response.json()
+          if (!userData) {
+                throw 'Email Address incorrect';
+          } else if (password !== userData.password){
+                throw 'Password incorrect';
+          } else {
+              dispatch(login(userData));
+          }
         } catch (error) {
           console.log(error);
+            dispatch(showLoginError());
         }
       }
 }

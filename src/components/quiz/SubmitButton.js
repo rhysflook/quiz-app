@@ -1,18 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
 import { getResults } from "../../redux/questionsSlice";
 
 function SubmitButton(props) {
-    const { questions, category, showResults } = useSelector(state => state.questions);
+    const { questions, category, quizComplete } = useSelector(state => state.questions);
+    const history = useHistory();
 
     const dispatch = useDispatch();
     function sendAnswers() {
-        dispatch(getResults(category, questions));
+        if (quizComplete) {
+            history.push('/results')
+        } else {
+            dispatch(getResults(category, questions, history));
+        }
     }
 
     return (
         <div>
-            <button onClick={sendAnswers}>Submit Answers</button>
+            <button className='answer-button' onClick={sendAnswers}>{quizComplete ? 'Results' : 'Submit Answers'}</button>
         </div>
     );
 }

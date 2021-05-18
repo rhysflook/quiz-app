@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
 } from "react-router-dom";
 import Login from './Login.js';
 import Menu from './mainMenu/Menu.js';
@@ -11,7 +9,6 @@ import Quiz from './quiz/Quiz.js';
 import Results from './results/Results.js';
 import NavBar from './NavBar';
 import './App.css';
-import { useSelector } from 'react-redux';
 
 /**
 
