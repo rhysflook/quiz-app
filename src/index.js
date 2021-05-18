@@ -9,6 +9,8 @@ import { makeServer } from './server.js';
 
 // centralise redirects to the App component
 // centralise handling session storage if possible
+//check login password
+
 
 makeServer({ environment: "development" })
 

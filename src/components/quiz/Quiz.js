@@ -9,29 +9,26 @@ import SubmitButton from './SubmitButton';
 
 import './quiz.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getQuestions, resetStartQuiz } from '../../redux/questionsSlice';
+import { getQuestions, setShowQuizFalse } from '../../redux/questionsSlice';
 
 function Quiz(props) {
+    
+    const { questions, showResults, startQuiz } = useSelector(state => state.questions);
+    // const dispatch = useDispatch();
+    // if (startQuiz) {
+    //     dispatch(setShowQuizFalse());
+    // }
 
-    const { questions } = useSelector(state => state.questions);
-    const history = useHistory();
-    const dispatch = useDispatch();
-    // dispatch(getQuestions());
-    // const [testComplete, setTestComplete] = useState(false);
+    if (showResults) {
+        // history.push('/results')
+        return (
+          <Redirect push to='/results'/>
+        );
+    　}
 
     function checkIfAnswered(questionNum) {
         return questions[questionNum].answerSelected !== null;
     }
-
-    // if (testComplete) {
-    //     return (
-    //         <Redirect
-    //           to={{
-    //             pathname: "/results",
-    //           }}
-    //         />
-    //       );
-    // }
 
     return (
         <div className='inner-content'>

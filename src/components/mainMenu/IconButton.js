@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { getQuestions } from '../../redux/questionsSlice';
+import { getQuestions, setCategory } from '../../redux/questionsSlice';
 import Icon from './Icon';
 
 function IconButton(props) {
@@ -7,6 +7,7 @@ function IconButton(props) {
     const dispatch = useDispatch();
 
     function handleClick() {
+        dispatch(setCategory(route));
         dispatch(getQuestions(route));
     }
 

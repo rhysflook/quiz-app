@@ -1,7 +1,7 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router';
-import { getQuestions } from '../../redux/questionsSlice';
+import { getQuestions, setShowQuizFalse } from '../../redux/questionsSlice';
 import LoggedinMenu from './LoggedInMenu';
 import NotLoggedInMenu from './NotLoggedInMenu';
 /**
@@ -18,7 +18,9 @@ function Menu(props) {
     const dispatch = useDispatch();  
 
     if (startQuiz) {
-      return (<Redirect to='/quiz' />);
+      console.log(startQuiz);
+      // dispatch(setShowQuizFalse());
+      return (<Redirect push to='/quiz' />);
     }
 
     return (

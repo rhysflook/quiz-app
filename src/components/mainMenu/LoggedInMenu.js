@@ -1,7 +1,5 @@
 import { useDispatch } from "react-redux";
-import{ getQuestions } from '../../redux/questionsSlice.js';
 import IconButton from './IconButton';
-import Icon from './Icon';
 
 function LoggedInMenu(props) {
     const { fName, lName } = props.user;

@@ -2,18 +2,25 @@ import { createServer, Model } from "miragejs";
 
 function getResults(answers, userAnswers) {
     const questionNums = Object.keys(userAnswers);
-    const results = questionNums.map(num =>{checkAnswer(answers[num], userAnswers[num])});
-    return results
+    const results = questionNums.map(num => checkAnswer(answers[num], userAnswers[num]));
+    const score = results.reduce((points, result) => {
+        return result.correct ? points + 1 : points
+    }, 0);
+    return { results, score };
 } 
 
 function checkAnswer(correctAnswer, userAnswer) {
-    const {questionText, answerSelected} = userAnswer;
-    if (answerSelected === correctAnswer) {
-        return {questionText, correct: true, correctAnswer, userAnswer: correctAnswer};
-    } else {
-        return {questionText, correct: false, correctAnswer, userAnswer: answerSelected}
-    }
+
+    const {question, answerSelected} = userAnswer;
+
+    return {question, correct: answerSelected === correctAnswer, correctAnswer, answerSelected};
 }
+//     if (answerSelected === correctAnswer) {
+//         return {questionText, correct: true, correctAnswer, userAnswer: correctAnswer};
+//     } else {
+//         return {questionText, correct: false, correctAnswer, userAnswer: answerSelected}
+//     }
+// }
 
 export function makeServer({ environment = "test" } = {}) {
   createServer({
@@ -44,8 +51,7 @@ export function makeServer({ environment = "test" } = {}) {
 
         this.post("/api/answers", (schema, request) => {
             const { category, userAnswers } = JSON.parse(request.requestBody);
-            console.log(category)
-            return getResults(correctAnswers[category], userAnswers)  
+            return getResults(correctAnswers[category], userAnswers); 
         })
 
         this.post("/api/add-account/", (schema, request) => {
@@ -74,60 +80,60 @@ const capitalQuestions = {
         answerSelected: null,
         active: true,
     },
-    2: {
-        question: 'What is the capital city of Japan?',
-        options: ['Kyoto', 'Osaka', 'Tokyo', 'Nara'],
-        answerSelected: null,
-        active: false,
-    },
-    3: {
-        question: 'What is the capital city of France?',
-        options: ['Marseille', 'Bordeaux', 'Lyon', 'Paris'],
-        answerSelected: null,
-        active: false,
-    },
-    4: {
-        question: 'What is the capital city of Australia?',
-        options: ['Canberra', 'Perth', 'Sydney', 'Gold Coast'],
-        answerSelected: null,
-        active: false,
-    },
-    5: {
-        question: 'What is the capital city of Thailand?',
-        options: ['Chiang Mai', 'Bangkok', 'Phuket', 'Khon Kaen'],
-        answerSelected: null,
-        active: false,
-    },
-    6: {
-        question: 'What is the capital city of Germany?',
-        options: ['Munich', 'Hamburg', 'Berlin', 'Frankfurt'],
-        answerSelected: null,
-        active: false,
-    },
-    7: {
-        question: 'What is the capital city of Kenya?',
-        options: ['Nairobi', 'Mombasa', 'Kisumu', 'Eldoret'],
-        answerSelected: null,
-        active: false,
-    },
-    8: {
-        question: 'What is the capital city of Brazil?',
-        options: ['Rio de Janeiro', 'Brasilia', 'São Paulo', 'Belo Horizonte'],
-        answerSelected: null,
-        active: false,
-    },
-    9: {
-        question: 'What is the capital city of India?',
-        options: ['Chennai', 'Bengaluru', 'Delhi', 'Mumbai'],
-        answerSelected: null,
-        active: false,
-    },
-    10: {
-        question: 'What is the capital city of Canada?',
-        options: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa'],
-        answerSelected: null,
-        active: false,
-    },
+    // 2: {
+    //     question: 'What is the capital city of Japan?',
+    //     options: ['Kyoto', 'Osaka', 'Tokyo', 'Nara'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 3: {
+    //     question: 'What is the capital city of France?',
+    //     options: ['Marseille', 'Bordeaux', 'Lyon', 'Paris'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 4: {
+    //     question: 'What is the capital city of Australia?',
+    //     options: ['Canberra', 'Perth', 'Sydney', 'Gold Coast'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 5: {
+    //     question: 'What is the capital city of Thailand?',
+    //     options: ['Chiang Mai', 'Bangkok', 'Phuket', 'Khon Kaen'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 6: {
+    //     question: 'What is the capital city of Germany?',
+    //     options: ['Munich', 'Hamburg', 'Berlin', 'Frankfurt'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 7: {
+    //     question: 'What is the capital city of Kenya?',
+    //     options: ['Nairobi', 'Mombasa', 'Kisumu', 'Eldoret'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 8: {
+    //     question: 'What is the capital city of Brazil?',
+    //     options: ['Rio de Janeiro', 'Brasilia', 'São Paulo', 'Belo Horizonte'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 9: {
+    //     question: 'What is the capital city of India?',
+    //     options: ['Chennai', 'Bengaluru', 'Delhi', 'Mumbai'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
+    // 10: {
+    //     question: 'What is the capital city of Canada?',
+    //     options: ['Toronto', 'Vancouver', 'Montreal', 'Ottawa'],
+    //     answerSelected: null,
+    //     active: false,
+    // },
 }
 
 const mathsQuestions = {
@@ -321,8 +327,9 @@ const movieQuestions = {
 
 const correctAnswers = {
     capitals: {
-        1: 'Cardiff', 2: 'Tokyo', 3: 'Paris', 4: 'Canberra', 5: 'Bangkok',
-        6: 'Berlin', 7: 'Nairobi', 8: 'Brasilia', 9: 'Delhi', 10: 'Ottawa'
+        1: 'Cardiff',
+        // 2: 'Tokyo', 3: 'Paris', 4: 'Canberra', 5: 'Bangkok',
+        // 6: 'Berlin', 7: 'Nairobi', 8: 'Brasilia', 9: 'Delhi', 10: 'Ottawa'
     },
     maths: {
         1: '9', 2: '72', 3: '5', 4: '416', 5: '364',

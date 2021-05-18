@@ -13,7 +13,6 @@ function NavItem(props) {
         if (isActive) {
             return 'nav-item active';
         } else if (!active) {
-            console.log('YES');
             return 'nav-item inactive';
         } else {
             return 'nav-item';

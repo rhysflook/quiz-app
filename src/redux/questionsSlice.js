@@ -7,33 +7,58 @@ const questionsSlice = createSlice({
         category: null,
         questions: {},
         results: {},
+        score: null,
+        showResults: false
     },
     reducers: {
-        selectAnswer: (state, action) => {
-            const { answerIndex, tab } = action.payload;
-            const { questions } = state;
-            questions[tab].answerSelected = answerIndex;
+        selectAnswer: ({ questions }, { payload: { answer, tab } }) => {
+            console.log(answer, tab);
+            questions[tab].answerSelected = answer;
             if (tab !== Object.keys(questions).length){
                 questions[tab + 1].active = true;
             }
-            return state;
         },
 
-        setCategory: (state, { payload }) => {state.category = payload},
+        // activateNextQuestion: (state, { payload }) => {
+        //     if (tab !== Object.keys(questions).length){
+        //         questions[tab + 1].active = true;
+        //     }
+        // },
+
+        setCategory: (state, { payload }) => {
+            state.category = payload;
+        },
 
         getQuestionSet: (state, { payload }) => {
-            state.startQuiz = true;
             state.questions = payload;
+            state.startQuiz = true;
         },
 
         getResultsSet: (state, { payload }) => {
-            state.results = payload;
-        }
+            console.log(payload)
+            state.results = payload.results;
+            state.score = payload.score;
+            state.showResults = true;
+        },
+
+        showResultWindow: state => state.showResults = true,
+
+        setShowResultWindowFalse: state => state.showResults = false,
+
+        showQuizWindow: state => {
+            state.startQuiz = true;
+        },
+
+        setShowQuizFalse: state => {
+            state.startQuiz = false;
+        },
 
     }
 });
 
-export const { selectAnswer, getQuestionSet, setCategory, getResultsSet } = questionsSlice.actions;
+export const { 
+    selectAnswer, getQuestionSet, setCategory, getResultsSet, showQuizWindow, setShowQuizFalse, showResultWindow, setShowResultWindowFalse
+ } = questionsSlice.actions;
 export default questionsSlice.reducer;
 
 export function getQuestions(route) {
@@ -42,8 +67,7 @@ export function getQuestions(route) {
           const response = await fetch('/api/quiz/' + route)
           const questions = await response.json()
           dispatch(getQuestionSet(questions));
-          dispatch(setCategory(route));
-          
+          dispatch(setShowQuizFalse());
         } catch (error) {
           console.log('Could not load questions');
         }
@@ -52,14 +76,15 @@ export function getQuestions(route) {
 
 export function getResults(category, userAnswers) {
     return async dispatch => {
-        
+
         try {
             const response = await fetch('/api/answers', {
                 method: 'POST',
                 body: JSON.stringify({ category, userAnswers })
         })
-            const results = await response.json()
-            dispatch(getResultsSet(results));
+            const quizResults = await response.json()
+            dispatch(getResultsSet(quizResults));
+            dispatch(setShowResultWindowFalse());
         } catch (error) {
             console.log(error);
         }

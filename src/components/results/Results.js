@@ -4,21 +4,23 @@ import {
     Redirect
   } from "react-router-dom";
 import './results.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { showQuizWindow, setShowQuizFalse } from '../../redux/questionsSlice';
 
 function Results(props) {
     const [backToQuiz, setBackToQuiz] = useState(false);
-    let score = 0;
+    const { results, score, startQuiz } = useSelector(state => state.questions);
+    const dispatch = useDispatch();
 
-    for (const answer of props.results) {
-        if (answer.correct) {
-            score += 5;
-        }
+    function handleClick() {
+        dispatch(showQuizWindow());
     }
 
-    if (backToQuiz) {
+    if (startQuiz) {
+        dispatch(setShowQuizFalse());
         return (
             <Redirect
-                to={{
+                push to={{
                     pathname: "/quiz",
                 }}
           />
@@ -28,7 +30,7 @@ function Results(props) {
     return (
         <div>
             <h1>Capitals Quiz Results</h1>
-            <h2>You answered {score/5}/20 correctly to get a score of {score}%!</h2>
+            <h2>You answered {score}/{results.length} correctly to get a score of {score / results.length * 100}%!</h2>
             <table>
              <tbody>
                     <th>
@@ -42,10 +44,10 @@ function Results(props) {
                     </th>
                 
                 
-                    {props.results.map((result, index) => <ResultRow key={'Question' + index + 1} row={result} />)}
+                    {results.map((result, index) => <ResultRow key={'Question' + index + 1} row={result} />)}
                 </tbody>
             </table>
-            <button onClick={() => setBackToQuiz(true)}>Back To Quiz</button>
+            <button onClick={handleClick}>Back To Quiz</button>
         </div>
     );
 }
