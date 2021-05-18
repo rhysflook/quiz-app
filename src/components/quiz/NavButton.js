@@ -7,9 +7,10 @@ function NavButton(props) {
     const dispatch = useDispatch();
     const tabNum = Number(tab);
     const {direction, text} = props;
+    const numOfQuestions = Object.keys(questions).length;
     
     function nextQuestionActive() {
-        if (tabNum !== questions.length) {
+        if (tabNum !== numOfQuestions) {
             const nextQuestion = tabNum + 1;
             return questions[nextQuestion].active;
         }
@@ -17,7 +18,7 @@ function NavButton(props) {
     
     function handleClick() {
         const lowerBoundary = tabNum === 1 && direction === -1; 
-        const UpperBoundary = tabNum === questions.length && direction === 1;
+        const UpperBoundary = tabNum === numOfQuestions && direction === 1;
         if (!lowerBoundary && !UpperBoundary) {
             if (nextQuestionActive() && direction === 1) {
                 dispatch(increment());

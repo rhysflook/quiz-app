@@ -7,9 +7,10 @@ import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { makeServer } from './server.js';
 
+// centralise redirects to the App component
+// centralise handling session storage if possible
+
 makeServer({ environment: "development" })
-
-
 
 ReactDOM.render(
   <React.StrictMode>

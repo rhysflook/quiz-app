@@ -7,8 +7,6 @@ function LoggedInMenu(props) {
     const { fName, lName } = props.user;
     const dispatch = useDispatch();
 
-
-
     return (
         <div className='question-box'>
             <h1>Welcome {fName}</h1>
