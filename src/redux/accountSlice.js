@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const userData = sessionStorage;
+// const userData = sessionStorage;
 
-const sessionUserData = {
-    loggedIn: userData.getItem('loggedIn') ,
-    currentAccount: {
-        email: userData.getItem('email'),
-        password: userData.getItem('password'),
-        fName: userData.getItem('fName'),
-        lName: userData.getItem('lName'),
-    }
-}
+// const sessionUserData = {
+//     loggedIn: userData.getItem('loggedIn') ,
+//     currentAccount: {
+//         email: userData.getItem('email'),
+//         password: userData.getItem('password'),
+//         fName: userData.getItem('fName'),
+//         lName: userData.getItem('lName'),
+//     }
+// }
 
 
 const accountSlice = createSlice({
     name: 'account',
     initialState: {
-        loggedIn: sessionUserData.loggedIn,
-        currentAccount: sessionUserData.currentAccount,
+        loggedIn: false,
+        currentAccount: {},
         failedLogin: false
     },
     reducers: {
@@ -53,9 +53,9 @@ export function getAccount(email, password) {
           })
           const userData = await response.json()
           if (!userData) {
-                throw 'Email Address incorrect';
+                throw new Error('Email Address incorrect');
           } else if (password !== userData.password){
-                throw 'Password incorrect';
+                throw new Error('Password incorrect');
           } else {
               dispatch(login(userData));
           }

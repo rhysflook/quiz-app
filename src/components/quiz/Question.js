@@ -6,7 +6,7 @@ function Question(props) {
     const { question } = questions[tab];
     return (
         <div>
-            <h1 className='question'>{question}</h1>
+            <h1 className='main-header'>{question}</h1>
         </div>
     )
 }

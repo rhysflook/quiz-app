@@ -10,6 +10,7 @@ function IconButton(props) {
     function handleClick() {
         dispatch(setCategory(route));
         dispatch(getQuestions(route, history));
+        
     }
 
     return (

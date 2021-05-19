@@ -6,18 +6,22 @@ import store from './redux/store.js';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { makeServer } from './server.js';
+import persistStore from 'redux-persist/es/persistStore';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // centralise redirects to the App component
 // centralise handling session storage if possible
 //check login password
-console.log(store.getState());
+const persistor = persistStore(store);
 
 makeServer({ environment: "development" })
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
         <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

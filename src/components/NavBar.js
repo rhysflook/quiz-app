@@ -10,7 +10,7 @@ function NavBar(props) {
             <div className='nav-bar-section long'>
                 <QuestionNavBar />
             </div>
-            <div className='nav-bar-section'>
+            <div className='nav-bar-section short'>
                 <HomeButton />
                 <LogoutButton />
             </div>

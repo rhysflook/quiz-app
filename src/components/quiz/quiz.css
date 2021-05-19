@@ -17,9 +17,10 @@ ul {
     border: cadetblue 1px solid; 
 }
 .nav-item.inactive {
-    box-shadow: none;
+    visibility: hidden;
+    /* box-shadow: none;
 	background: none;
-    background-color: cadetblue;
+    background-color: cadetblue; */
 }
 .nav-item {
     cursor: pointer;
@@ -74,9 +75,5 @@ ul {
 
 
 
-.nav-button {
-    width: 200px;
-    height: 30px;
-    margin: 20px;
-}
+
 

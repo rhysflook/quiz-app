@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
 const questionsSlice = createSlice({
     name: 'questions',
     initialState: {
@@ -7,11 +8,11 @@ const questionsSlice = createSlice({
         questions: {},
         results: {},
         score: null,
-        quizComplete: false
+        quizComplete: false,
+        doingQuiz: false
     },
     reducers: {
         selectAnswer: ({ questions }, { payload: { answer, tab } }) => {
-            console.log(answer, tab);
             questions[tab].answerSelected = answer;
             if (tab !== Object.keys(questions).length){
                 questions[tab + 1].active = true;
@@ -29,6 +30,7 @@ const questionsSlice = createSlice({
         },
 
         getQuestionSet: (state, { payload }) => {
+            state.doingQuiz = true;
             state.questions = payload;
         },
 
@@ -38,12 +40,17 @@ const questionsSlice = createSlice({
             state.quizComplete = true
         },
 
-        clearQuestions: state => {state.questions = {}}
+        clearQuizState: state => {
+            state.questions = {};
+            state.category = null;
+            state.doingQuiz = false;
+            state.quizComplete = false;
+        }
     }
 });
 
 export const { 
-    selectAnswer, getQuestionSet, setCategory, getResultsSet, clearQuestions
+    selectAnswer, getQuestionSet, setCategory, getResultsSet, clearQuizState
  } = questionsSlice.actions;
 export default questionsSlice.reducer;
 

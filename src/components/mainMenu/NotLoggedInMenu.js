@@ -6,7 +6,7 @@ function NotLoggedInMenu() {
         history.push('/login');
     }
     return (
-        <div className='question-box'>
+        <div className='main-box'>
             <h1>Please login to access the quizzes.</h1>
             <button className='answer-button' onClick={handleClick}>
                 Login

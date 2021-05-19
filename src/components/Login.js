@@ -1,12 +1,4 @@
 import { Redirect } from 'react-router';
-/**
- 
-Login form
-
-Password verification
-
- */
-
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount } from '../redux/accountSlice';
 import './App.css';
@@ -15,12 +7,10 @@ import { useEffect } from 'react';
 const signUp = false;
 
 function Login(props) {
-    // const history = useHistory();
     const { loggedIn, currentAccount, failedLogin } = useSelector(state => state.accounts);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('YUYU')
         let { email, password, fName, lName} = currentAccount;
         if (loggedIn) {
             sessionStorage.setItem('loggedIn', true);
@@ -30,7 +20,7 @@ function Login(props) {
             sessionStorage.setItem('lName', lName);
         }
 
-    }, [loggedIn]);
+    }, [loggedIn, currentAccount]);
 
     function handleSubmit(e) {
         const email = e.target.email.value;
@@ -46,8 +36,8 @@ function Login(props) {
 
     return (
         
-        <div className='question-box'>
-            <h1>{signUp ? 'Please register a new account' : 'Please enter your login details'} </h1>
+        <div className='main-box'>
+            <h1 className='main-header'>{signUp ? 'Please register a new account' : 'Please enter your login details'} </h1>
             <form onSubmit={handleSubmit}>
                 {signUp && <div>
                     <input className='short-input' type='text' name='fName' placeholder='First Name'></input>

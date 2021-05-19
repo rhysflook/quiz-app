@@ -48,7 +48,7 @@ Make question page
  */
 
 function App() {
-  
+
   return (
     <Router>
       <div>
@@ -66,6 +66,10 @@ function App() {
           <Route path="/results">
             <Results />
           </Route>
+          <Route path='*'>
+            <h1>Page not found</h1>
+          </Route>
+
         </Switch>
       </div>
     </Router>

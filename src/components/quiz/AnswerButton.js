@@ -15,14 +15,15 @@ function AnswerButton(props) {
     function handleClick() {
         dispatch(selectAnswer({answer, tab: Number(tab)}));
     }
-    console.log(quizComplete)
     return (
-        <button 
+        <div>
+            <button 
             className={isActive ? 'answer-button active' : 'answer-button'}
             onClick={handleClick}
             disabled={quizComplete}
-        >{answer}
-        </button>
+            >{answer}
+            </button>
+        </div>
     );
 }
 
