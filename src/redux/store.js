@@ -9,9 +9,9 @@ import {
     REGISTER,
   } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import tabReducer from './tabSlice.js';
-import questionsReducer from './questionsSlice.js';
-import accountReducer from './accountSlice.js';
+import tabReducer from './tabSlice';
+import questionsReducer from './questionsSlice';
+import accountReducer from './accountSlice';
 
 const persistConfig = {
     key: 'root',

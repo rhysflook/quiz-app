@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement } from '../../redux/tabSlice.js';
+import { increment, decrement } from '../../redux/tabSlice';
 
 function NavButton(props) {
     const { tab } = useSelector(state => state.tab);
@@ -8,14 +8,7 @@ function NavButton(props) {
     const tabNum = Number(tab);
     const {direction, text} = props;
     const numOfQuestions = Object.keys(questions).length;
-    
-    function nextQuestionActive() {
-        if (tabNum !== numOfQuestions) {
-            const nextQuestion = tabNum + 1;
-            return questions[nextQuestion].active;
-        }
-    }
-    
+
     function handleClick() {
         const lowerBoundary = tabNum === 1 && direction === -1; 
         const UpperBoundary = tabNum === numOfQuestions && direction === 1;
@@ -26,6 +19,13 @@ function NavButton(props) {
                 dispatch(decrement());
             }
         }   
+    }
+    
+    function nextQuestionActive() {
+        if (tabNum !== numOfQuestions) {
+            const nextQuestion = tabNum + 1;
+            return questions[nextQuestion].active;
+        }
     }
 
     return (

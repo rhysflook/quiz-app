@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 const questionsSlice = createSlice({
     name: 'questions',
     initialState: {
@@ -18,12 +17,6 @@ const questionsSlice = createSlice({
                 questions[tab + 1].active = true;
             }
         },
-
-        // activateNextQuestion: (state, { payload }) => {
-        //     if (tab !== Object.keys(questions).length){
-        //         questions[tab + 1].active = true;
-        //     }
-        // },
 
         setCategory: (state, { payload }) => {
             state.category = payload;
@@ -52,12 +45,13 @@ const questionsSlice = createSlice({
 export const { 
     selectAnswer, getQuestionSet, setCategory, getResultsSet, clearQuizState
  } = questionsSlice.actions;
+
 export default questionsSlice.reducer;
 
-export function getQuestions(route, history) {
+export function getQuestions(category, history) {
     return async dispatch => {
         try {
-          const response = await fetch('/api/quiz/' + route)
+          const response = await fetch('/api/quiz/' + category)
           const questions = await response.json()
           dispatch(getQuestionSet(questions));
           history.push('/quiz');

@@ -1,6 +1,6 @@
 function ResultRow(props) {
 
-    const {question, correct, correctAnswer, answerSelected} = props.row;
+    const {question, correct, answerSelected} = props.row;
     const tdStyle = correct ? {backgroundColor: '#98bf64'} : {backgroundColor: '#e12120'};
     return (
         <tr>

@@ -1,8 +1,6 @@
-import HomeButton from "./HomeButton.js";
-import LogoutButton from './LogoutButton.js'
-import QuestionNavBar from './quiz/QuestionNavBar.js';
-
-
+import HomeButton from "./HomeButton";
+import LogoutButton from './LogoutButton'
+import QuestionNavBar from './QuestionNavBar';
 
 function NavBar(props) {
     return (
@@ -13,6 +11,7 @@ function NavBar(props) {
             <div className='nav-bar-section short'>
                 <HomeButton />
                 <LogoutButton />
+
             </div>
         </nav>
     );

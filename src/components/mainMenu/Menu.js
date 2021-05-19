@@ -3,17 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router';
 import { clearQuizState } from '../../redux/questionsSlice';
 import { resetTab } from '../../redux/tabSlice';
-import LoggedinMenu from './LoggedInMenu';
-import NotLoggedInMenu from './NotLoggedInMenu';
-/**
- * Show buttons to login/signup and start the quiz
- * Only show login/signup button if not logged in 
- * Only show start button if logged in
- */
-
+import QuizButton from './QuizButton'
 
 function Menu(props) {
     const { loggedIn, currentAccount } = useSelector(state => state.accounts);
+    const { fName, lName } = currentAccount;
     const location = useLocation();
     const dispatch = useDispatch();
 
@@ -31,9 +25,13 @@ function Menu(props) {
     }
 
     return (
-        <div>
-          {loggedIn ?  <LoggedinMenu user={currentAccount} /> : <NotLoggedInMenu />}
-        </div>
+      <div className='main-box'>
+          <h1 className='main-header'>Welcome {fName} {lName}</h1>
+          <QuizButton text='Capitals' category='capitals'/>
+          <QuizButton text='Maths' category='maths'/>
+          <QuizButton text='Science' category='science'/>
+          <QuizButton text='Movie Trivia' category='movies'/>
+      </div>
         
     );
 }

@@ -2,14 +2,13 @@ import ResultRow from './ResultRow';
 import {
     Redirect, useHistory
   } from "react-router-dom";
-import './results.css';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 
 function Results(props) {
     const { results, score, quizComplete } = useSelector(state => state.questions);
-    const history = useHistory();
     const { loggedIn } = useSelector(state => state.accounts)
+
+    const history = useHistory();
 
     if (!loggedIn) {
         return (
@@ -33,14 +32,11 @@ function Results(props) {
             <h2 className='sub-header'>You answered {score}/{results.length} correctly to get a score of {score / results.length * 100}%!</h2>
             <div className='table'>
             <table>
-             <tbody>
-                    <th>
-                        Question
-                    </th>
-                    <th>
-                        You Answered
-                    </th>                
-                
+                <tbody>
+                    <tr>
+                      <th>Question</th>
+                      <th>You Answered</th>  
+                    </tr>              
                     {results.map((result, index) => <ResultRow key={'Question' + index + 1} row={result} />)}
                 </tbody>
             </table>

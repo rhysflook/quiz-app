@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import { logout } from '../redux/accountSlice.js';
+import { logout } from '../../redux/accountSlice';
 
-function LogoutButton() {
+function LogoutButton(props) {
     const dispatch = useDispatch();
     const { loggedIn } = useSelector(state => state.accounts);
  
@@ -11,7 +11,7 @@ function LogoutButton() {
     }
 
     if (!loggedIn) {
-        return (<Redirect to='/' />);
+        return (<Redirect to='/login' />);
     }
 
     return (

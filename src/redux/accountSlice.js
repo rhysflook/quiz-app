@@ -1,18 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// const userData = sessionStorage;
-
-// const sessionUserData = {
-//     loggedIn: userData.getItem('loggedIn') ,
-//     currentAccount: {
-//         email: userData.getItem('email'),
-//         password: userData.getItem('password'),
-//         fName: userData.getItem('fName'),
-//         lName: userData.getItem('lName'),
-//     }
-// }
-
-
 const accountSlice = createSlice({
     name: 'account',
     initialState: {
@@ -52,6 +39,7 @@ export function getAccount(email, password) {
               body: JSON.stringify({ email, password })
           })
           const userData = await response.json()
+          console.log(response)
           if (!userData) {
                 throw new Error('Email Address incorrect');
           } else if (password !== userData.password){
@@ -64,20 +52,4 @@ export function getAccount(email, password) {
             dispatch(showLoginError());
         }
       }
-}
-
-export function CreateAccount(userData) {
-    return async dispatch => {
-        try {
-            const response = await fetch('/api/add-account/', {
-                method: 'POST',
-                body: JSON.stringify({ ...userData })
-            })
-            const data = await response.json()
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
 }

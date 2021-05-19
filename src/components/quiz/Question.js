@@ -5,9 +5,7 @@ function Question(props) {
     const { questions } = useSelector(state => state.questions);
     const { question } = questions[tab];
     return (
-        <div>
             <h1 className='main-header'>{question}</h1>
-        </div>
     )
 }
 

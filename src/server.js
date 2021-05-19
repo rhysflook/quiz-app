@@ -10,17 +10,10 @@ function getResults(answers, userAnswers) {
 } 
 
 function checkAnswer(correctAnswer, userAnswer) {
-
     const {question, answerSelected} = userAnswer;
-
     return {question, correct: answerSelected === correctAnswer, correctAnswer, answerSelected};
 }
-//     if (answerSelected === correctAnswer) {
-//         return {questionText, correct: true, correctAnswer, userAnswer: correctAnswer};
-//     } else {
-//         return {questionText, correct: false, correctAnswer, userAnswer: answerSelected}
-//     }
-// }
+
 
 export function makeServer({ environment = "test" } = {}) {
   createServer({
@@ -52,12 +45,6 @@ export function makeServer({ environment = "test" } = {}) {
         this.post("/api/answers", (schema, request) => {
             const { category, userAnswers } = JSON.parse(request.requestBody);
             return getResults(correctAnswers[category], userAnswers); 
-        })
-
-        this.post("/api/add-account/", (schema, request) => {
-            let attrs = JSON.parse(request.requestBody);
-            schema.users.create(attrs);
-            return attrs;
         })
 
         this.post("/api/check-account/", (schema, request) => {

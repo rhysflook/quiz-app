@@ -1,7 +1,6 @@
 import { Redirect } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccount } from '../redux/accountSlice';
-import './App.css';
+import { getAccount } from '../../redux/accountSlice';
 import { useEffect } from 'react';
 
 const signUp = false;

@@ -1,13 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// const currentTab = sessionStorage.getItem('tab');
-
 const tabSlice = createSlice({
     name: 'tab',
     initialState: {
         tab: 1,
         navBarVisible: false
-        // tab: currentTab !== null ? Number(currentTab) : 1
     },
     reducers: {
         increment: (state) => {state.tab += 1},

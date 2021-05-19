@@ -4,7 +4,6 @@ import NavButton from './NavButton';
 import SubmitButton from './SubmitButton';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import './quiz.css';
 
 function Quiz(props) {
     
@@ -26,16 +25,15 @@ function Quiz(props) {
             <Redirect to='/' />
           );
         }
-    
-
+ 
     return (
         <div className='main-box'>
             <Question />
             <div>
-                <AnswerButton answerIndex='0' />
-                <AnswerButton answerIndex='1' />
-                <AnswerButton answerIndex='2' />
-                <AnswerButton answerIndex='3' />
+                <AnswerButton optionIndex='0' />
+                <AnswerButton optionIndex='1' />
+                <AnswerButton optionIndex='2' />
+                <AnswerButton optionIndex='3' />
             </div>
             <div className='nav-box'>
                 <NavButton direction={-1} text={'Back'} />
